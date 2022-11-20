@@ -17,10 +17,10 @@ body{
     color: #efefef;
 }
 .container p{
-    display: flex;
-    justify-content: center;
     font-size: 18px;
     color: #94a3b8;
+    display: flex;
+    justify-content: center;
     
 }
 .container button{
@@ -30,6 +30,7 @@ body{
     border-radius: 30px;
     
     
+    
 }
 #box{
     margin-top: 30px;
@@ -37,11 +38,23 @@ body{
 #txt1,#txt2{
     color: #94a3b8;
     display: flex;
-    justify-content: start;
+    justify-content: center;
 }
 #p1{
     margin-top: 30px;
 }
 #p2{
     margin-bottom: 10px;
+    display: inline;
+    margin-left: 24.7%;
+    
+}
+#txt2{
+    margin-top: 30px;
+    
+}
+.container img ,a{
+    display: flex;
+    justify-content: center;
+    
 }
