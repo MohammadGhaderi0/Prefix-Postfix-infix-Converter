@@ -387,6 +387,6 @@ function infixToPrefix(infix)
     // Final prefix expression is
     // present in operands stack.
     let answer =  operands[operands.length-1];
-    txt1.innerHTML = `Infix to Postfix: ${answer}`;
+    txt1.innerHTML = `Infix to Prefix: ${answer}`;
 
 }
