@@ -13,6 +13,10 @@ document.getElementById("btn").onclick = function(){
         postToPre(text);
         PostToIn(text);
     }    
+    else if(text==""){
+        txt1.innerHTML ="Input field is empty!";
+
+    }
     else{
         infixToPostfix(text);
         infixToPrefix(text);
