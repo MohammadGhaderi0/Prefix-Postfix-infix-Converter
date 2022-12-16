@@ -11,7 +11,7 @@ document.getElementById("btn").onclick = function(){
     else if (text.charAt(text.length - 1)=="+"||text.charAt(text.length - 1)=="-"||text.charAt(text.length - 1)=="*"||text.charAt(text.length - 1)=="/"||text.charAt(text.length - 1)=="%"||text.charAt(text.length - 1)=="^"){
         console.log("postfix");
         postToPre(text);
-        PostToIn(text);
+        PostfixToInfix(text);
     }    
     else if(text==""){
         txt1.innerHTML ="Input field is empty!";
@@ -149,6 +149,8 @@ function postToPre(post_exp)
             ans += s.pop();
         txt1.innerHTML = `Postfix to Prefix: ${ans}`;
     }
+
+
      
     function isOperand(x)
 {
@@ -157,38 +159,62 @@ function postToPre(post_exp)
 }
     
     
-    function PostToIn(exp)
-    {
-        let s = [];
-       
-        for (let i = 0; i < exp.length; i++)
-        {
-            // Push operands
-            if (isOperand(exp[i]))
-            {
-            s.push(exp[i] + "");
-            }
-       
-            // We assume that input is
-            // a valid postfix and expect
-            // an operator.
-            else
-            {
-                let op1 = s.pop();
-                 
-                let op2 = s.pop();
-                s.pop();
-                s.push("(" + op2 + exp[i] +
-                        op1 + ")");
-            }
-        }
-       
-        // There must be a single element
-        // in stack now which is the required
-        // infix.
-        let answer =s[s.length-1];
-        txt2.innerHTML = `Postfix to Infix: ${answer}`;
-    }
+
+
+function push_stack(stackArr,ele)
+{
+ stackArr[stackArr.length]=ele;
+}
+
+function pop_stack(stackArr)
+{
+ var _temp=stackArr[stackArr.length-1];
+ delete stackArr[stackArr.length-1];
+ stackArr.length--;
+ return(_temp);
+}
+
+function isOperand(who)
+{
+ return(!isOperator(who)? true : false);
+}
+
+function isOperator(who)
+{
+ return((who=="+" || who=="-" || who=="*" || who=="/" || who=="(" || who==")")? true : false);
+}
+
+function topStack(stackArr)
+{
+ return(stackArr[stackArr.length-1]);
+}
+
+function PostfixToInfix(postfixStr)
+{
+ var stackArr=new Array();
+ postfixStr=postfixStr.split('');
+ for(var i=0; i<postfixStr.length; i++)
+ {
+  if(isOperand(postfixStr[i]))
+  {
+   push_stack(stackArr,postfixStr[i]);
+  }
+  else
+  {
+   var temp=topStack(stackArr);
+   pop_stack(stackArr);
+   var pushVal=topStack(stackArr)+postfixStr[i]+temp;
+   pop_stack(stackArr);
+   push_stack(stackArr,pushVal);
+  }
+ }
+ let answer = topStack(stackArr);
+ txt2.innerHTML = `Postfix to Infix: ${answer}`;
+} 
+
+
+
+
 
 
     function prec(c) {
