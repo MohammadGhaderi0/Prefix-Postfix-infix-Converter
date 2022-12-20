@@ -1,18 +1,21 @@
 let text ;
 let txt1 = document.getElementById('txt1');
 let txt2 = document.getElementById('txt2');
+
+
+// check if it is infix 
 document.getElementById("btn").onclick = function(){
     text = document.getElementById("box").value;
     if(Array.from(text)[0]=="+"||Array.from(text)[0]=="-"||Array.from(text)[0]=="*"||Array.from(text)[0]=="/"||Array.from(text)[0]=="%"||Array.from(text)[0]=="^"){
-        console.log("prefix");
-        preToPost(text);
-        PretoIn(text);
+        PrefixtoPostfix(text);
+        PrefixtoInfix(text);
     }
+// check if it is postfix
     else if (text.charAt(text.length - 1)=="+"||text.charAt(text.length - 1)=="-"||text.charAt(text.length - 1)=="*"||text.charAt(text.length - 1)=="/"||text.charAt(text.length - 1)=="%"||text.charAt(text.length - 1)=="^"){
-        console.log("postfix");
-        postToPre(text);
+        PostfixToPrefix(text);
         PostfixToInfix(text);
     }    
+// check if input is empty
     else if(text==""){
         txt1.innerHTML ="Input field is empty!";
 
@@ -20,10 +23,9 @@ document.getElementById("btn").onclick = function(){
     else{
         infixToPostfix(text);
         infixToPrefix(text);
-        
     }
+}       
 
-    }       
 
 function isOperator(x)
 {
@@ -37,7 +39,10 @@ function isOperator(x)
     return false;
 }
 
-function preToPost(pre_exp)
+
+// Function that converts prefix
+// expression to postfix expression.
+function PrefixtoPostfix(pre_exp)
     {
   
         let s = [];
@@ -76,17 +81,24 @@ function preToPost(pre_exp)
         let answer = (s[s.length - 1]);
         txt2.innerHTML = `Prefix to Postfix: ${answer}`;
     }
-function PretoIn(str)
+
+
+
+
+
+// Function that converts prefix
+// expression to infix expression.
+function PrefixtoInfix(pre_exp)
     {
         let stack = [];
  
         // Length of expression
-        let l = str.length;
+        let l = pre_exp.length;
  
         // Reading from right to left
         for(let i = l - 1; i >= 0; i--)
         {
-            let c = str[i];
+            let c = pre_exp[i];
  
             if (isOperator(c))
             {
@@ -110,7 +122,12 @@ function PretoIn(str)
         txt1.innerHTML = `Prefix to Infix: ${answer}`;
     }
 
-function postToPre(post_exp)
+
+
+
+// Function that converts postfix
+// expression to prefix expression.
+function PostfixToPrefix(post_exp)
     {
         let s = [];
   
@@ -160,7 +177,8 @@ function postToPre(post_exp)
     
     
 
-
+// Function that converts postfix
+// expression to infix expression.
 function push_stack(stackArr,ele)
 {
  stackArr[stackArr.length]=ele;
@@ -227,15 +245,15 @@ function PostfixToInfix(postfixStr)
         else
             return -1;
     }
-  
-    
-    function infixToPostfix(s) {
+// Function that converts infix
+// expression to postfix expression.
+    function infixToPostfix(In_exp) {
   
         let st = []; //For stack operations, we are using C++ built in stack
         let result = "";
   
-        for(let i = 0; i < s.length; i++) {
-            let c = s[i];
+        for(let i = 0; i < In_exp.length; i++) {
+            let c = In_exp[i];
   
             // If the scanned character is
             // an operand, add it to output string.
@@ -261,7 +279,7 @@ function PostfixToInfix(postfixStr)
   
             //If an operator is scanned
             else {
-                while(st.length != 0 && prec(s[i]) <= prec(st[st.length - 1])) {
+                while(st.length != 0 && prec(In_exp[i]) <= prec(st[st.length - 1])) {
                     result += st[st.length - 1];
                     st.pop(); 
                 }
@@ -302,7 +320,7 @@ function getPriority(C)
  
 // Function that converts infix
 // expression to prefix expression.
-function infixToPrefix(infix)
+function infixToPrefix(In_exp)
 {
     // stack for operators.
     let operators = [];
@@ -310,15 +328,15 @@ function infixToPrefix(infix)
     // stack for operands.
     let operands = [];
   
-    for (let i = 0; i < infix.length; i++)
+    for (let i = 0; i < In_exp.length; i++)
     {
   
         // If current character is an
         // opening bracket, then
         // push into the operators stack.
-        if (infix[i] == '(')
+        if (In_exp[i] == '(')
         {
-            operators.push(infix[i]);
+            operators.push(In_exp[i]);
         }
   
         // If current character is a
@@ -327,7 +345,7 @@ function infixToPrefix(infix)
         // in operands stack until
         // matching opening bracket is
         // not found.
-        else if (infix[i] == ')')
+        else if (In_exp[i] == ')')
         {
             while (operators.length!=0 &&
                 operators[operators.length-1] != '(')
@@ -360,9 +378,9 @@ function infixToPrefix(infix)
         // If current character is an
         // operand then push it into
         // operands stack.
-        else if (!isOperatorr(infix[i]))
+        else if (!isOperatorr(In_exp[i]))
         {
-            operands.push(infix[i] + "");
+            operands.push(In_exp[i] + "");
         }
   
         // If current character is an
@@ -374,7 +392,7 @@ function infixToPrefix(infix)
         else
         {
             while (operators.length &&
-                getPriority(infix[i]) <=
+                getPriority(In_exp[i]) <=
                     getPriority(operators[operators.length-1]))
                 {
   
@@ -391,7 +409,7 @@ function infixToPrefix(infix)
                 operands.push(tmp);
             }
   
-            operators.push(infix[i]);
+            operators.push(In_exp[i]);
         }
     }
   
