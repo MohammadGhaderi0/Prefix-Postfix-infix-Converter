@@ -3,23 +3,25 @@ let txt1 = document.getElementById('txt1');
 let txt2 = document.getElementById('txt2');
 
 
-// check if it is infix 
+
 document.getElementById("btn").onclick = function(){
     text = document.getElementById("box").value;
-    if(Array.from(text)[0]=="+"||Array.from(text)[0]=="-"||Array.from(text)[0]=="*"||Array.from(text)[0]=="/"||Array.from(text)[0]=="%"||Array.from(text)[0]=="^"){
+    // check if input is empty
+    if(text.length < 3){
+        txt1.innerHTML ="Error:the input must be at least 3 charachters";
+        txt1.style.color = "red"
+    }
+    // check if it is infix
+    else if(Array.from(text)[0]=="+"||Array.from(text)[0]=="-"||Array.from(text)[0]=="*"||Array.from(text)[0]=="/"||Array.from(text)[0]=="%"||Array.from(text)[0]=="^"){
         PrefixtoPostfix(text);
         PrefixtoInfix(text);
     }
-// check if it is postfix
+    // check if it is postfix
     else if (text.charAt(text.length - 1)=="+"||text.charAt(text.length - 1)=="-"||text.charAt(text.length - 1)=="*"||text.charAt(text.length - 1)=="/"||text.charAt(text.length - 1)=="%"||text.charAt(text.length - 1)=="^"){
         PostfixToPrefix(text);
         PostfixToInfix(text);
     }    
-// check if input is empty
-    else if(text==""){
-        txt1.innerHTML ="Input field is empty!";
 
-    }
     else{
         infixToPostfix(text);
         infixToPrefix(text);
