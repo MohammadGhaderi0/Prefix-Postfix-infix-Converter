@@ -10,8 +10,9 @@ document.getElementById("btn").onclick = function(){
     if(text.length < 3){
         txt1.innerHTML ="Error:the input must be at least 3 charachters";
         txt1.style.color = "red"
+        txt2.innerHTML = ""
     }
-    // check if it is infix
+    // check if it is prefix
     else if(Array.from(text)[0]=="+"||Array.from(text)[0]=="-"||Array.from(text)[0]=="*"||Array.from(text)[0]=="/"||Array.from(text)[0]=="%"||Array.from(text)[0]=="^"){
         PrefixtoPostfix(text);
         PrefixtoInfix(text);
@@ -36,6 +37,7 @@ function isOperator(x)
     case '-':
     case '/':
     case '*':
+    case '^':
         return true;
     }
     return false;
@@ -170,6 +172,10 @@ function PostfixToPrefix(post_exp)
     }
 
 
+
+
+
+
      
     function isOperand(x)
 {
@@ -179,8 +185,7 @@ function PostfixToPrefix(post_exp)
     
     
 
-// Function that converts postfix
-// expression to infix expression.
+
 function push_stack(stackArr,ele)
 {
  stackArr[stackArr.length]=ele;
@@ -201,7 +206,7 @@ function isOperand(who)
 
 function isOperator(who)
 {
- return((who=="+" || who=="-" || who=="*" || who=="/" || who=="(" || who==")")? true : false);
+ return((who=="+" || who=="-" || who=="*" ||who=="^" || who=="/" || who=="(" || who==")")? true : false);
 }
 
 function topStack(stackArr)
@@ -251,7 +256,7 @@ function PostfixToInfix(postfixStr)
 // expression to postfix expression.
     function infixToPostfix(In_exp) {
   
-        let st = []; //For stack operations, we are using C++ built in stack
+        let st = []; 
         let result = "";
   
         for(let i = 0; i < In_exp.length; i++) {
@@ -297,6 +302,8 @@ function PostfixToInfix(postfixStr)
         txt2.innerHTML = `Infix to Postfix: ${result}`;
         
     }
+
+
 
 
 
@@ -394,7 +401,7 @@ function infixToPrefix(In_exp)
         else
         {
             while (operators.length &&
-                getPriority(In_exp[i]) <=
+                getPriority(In_exp[i]) <
                     getPriority(operators[operators.length-1]))
                 {
   
