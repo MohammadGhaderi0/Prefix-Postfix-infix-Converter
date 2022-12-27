@@ -2,6 +2,19 @@ let text ;
 let txt1 = document.getElementById('txt1');
 let txt2 = document.getElementById('txt2');
 
+var treeArr = []; 
+var levelNum = 0; 
+var domArr; 
+
+
+
+var pre_order_traversal_arr = [];
+var middle_order_traversal_arr = [];
+var post_order_traversal_arr = [];
+
+var input = document.getElementById("box");
+var display = document.getElementById('display');
+
 
 
 document.getElementById("btn").onclick = function(){
@@ -15,18 +28,95 @@ document.getElementById("btn").onclick = function(){
     // check if it is prefix
     else if(Array.from(text)[0]=="+"||Array.from(text)[0]=="-"||Array.from(text)[0]=="*"||Array.from(text)[0]=="/"||Array.from(text)[0]=="%"||Array.from(text)[0]=="^"){
         PrefixtoPostfix(text);
-        PrefixtoInfix(text);
+        let stack = [];
+ 
+        // Length of expression
+        let l = text.length;
+ 
+        // Reading from right to left
+        for(let i = l - 1; i >= 0; i--)
+        {
+            let c = text[i];
+ 
+            if (isOperator(c))
+            {
+                let op1 = stack[stack.length - 1];
+                stack.pop()
+                let op2 = stack[stack.length - 1];
+                stack.pop()
+ 
+                // Concat the operands and operator
+                let temp = "(" + op1 + c + op2 + ")";
+                stack.push(temp);
+            }
+            else
+            {
+ 
+                // To make character to string
+                stack.push(c + "");
+            }
+        }
+        let answer = stack[stack.length - 1];
+        txt1.innerHTML = `Prefix to Infix: ${answer}`;
+        txt1.style.color = "#94a3b8";
+        text = answer;
     }
     // check if it is postfix
     else if (text.charAt(text.length - 1)=="+"||text.charAt(text.length - 1)=="-"||text.charAt(text.length - 1)=="*"||text.charAt(text.length - 1)=="/"||text.charAt(text.length - 1)=="%"||text.charAt(text.length - 1)=="^"){
         PostfixToPrefix(text);
-        PostfixToInfix(text);
+        var stackArr=new Array();
+        let postfixStr=text.split('');
+        for(var i=0; i<postfixStr.length; i++)
+        {
+        if(isOperand(postfixStr[i]))
+        {
+        push_stack(stackArr,postfixStr[i]);
+        }
+        else
+        {
+        var temp=topStack(stackArr);
+        pop_stack(stackArr);
+        var pushVal=topStack(stackArr)+postfixStr[i]+temp;
+        pop_stack(stackArr);
+        push_stack(stackArr,pushVal);
+        }
+        }
+        let answer = topStack(stackArr);
+        txt2.innerHTML = `Postfix to Infix: ${answer}`;
+        text =answer;
     }    
 
     else{
         infixToPostfix(text);
         infixToPrefix(text);
     }
+    initDomArr();
+    var temp = text.split("");
+    var arr = [];
+    var t = '';
+    temp.forEach(function(value) {
+        if ((value >= '0' && value <= '9') || value == '.') {
+            t += value;
+        } else {
+            if (t) {
+                arr.push(Number(t));
+                t = '';
+            }
+            arr.push(value);
+
+        }
+    });
+    if (t) {
+        arr.push(Number(t));
+    }
+
+
+    treeArr = [];
+    buildTree(arr, 0, arr.length);
+
+
+
+    createDom();
 }       
 
 
@@ -92,40 +182,6 @@ function PrefixtoPostfix(pre_exp)
 
 // Function that converts prefix
 // expression to infix expression.
-function PrefixtoInfix(pre_exp)
-    {
-        let stack = [];
- 
-        // Length of expression
-        let l = pre_exp.length;
- 
-        // Reading from right to left
-        for(let i = l - 1; i >= 0; i--)
-        {
-            let c = pre_exp[i];
- 
-            if (isOperator(c))
-            {
-                let op1 = stack[stack.length - 1];
-                stack.pop()
-                let op2 = stack[stack.length - 1];
-                stack.pop()
- 
-                // Concat the operands and operator
-                let temp = "(" + op1 + c + op2 + ")";
-                stack.push(temp);
-            }
-            else
-            {
- 
-                // To make character to string
-                stack.push(c + "");
-            }
-        }
-        let answer = stack[stack.length - 1];
-        txt1.innerHTML = `Prefix to Infix: ${answer}`;
-    }
-
 
 
 
@@ -169,6 +225,7 @@ function PostfixToPrefix(post_exp)
         while (s.length > 0)
             ans += s.pop();
         txt1.innerHTML = `Postfix to Prefix: ${ans}`;
+        txt1.style.color = "#94a3b8";
     }
 
 
@@ -214,28 +271,7 @@ function topStack(stackArr)
  return(stackArr[stackArr.length-1]);
 }
 
-function PostfixToInfix(postfixStr)
-{
- var stackArr=new Array();
- postfixStr=postfixStr.split('');
- for(var i=0; i<postfixStr.length; i++)
- {
-  if(isOperand(postfixStr[i]))
-  {
-   push_stack(stackArr,postfixStr[i]);
-  }
-  else
-  {
-   var temp=topStack(stackArr);
-   pop_stack(stackArr);
-   var pushVal=topStack(stackArr)+postfixStr[i]+temp;
-   pop_stack(stackArr);
-   push_stack(stackArr,pushVal);
-  }
- }
- let answer = topStack(stackArr);
- txt2.innerHTML = `Postfix to Infix: ${answer}`;
-} 
+
 
 
 
@@ -445,5 +481,128 @@ function infixToPrefix(In_exp)
     // present in operands stack.
     let answer =  operands[operands.length-1];
     txt1.innerHTML = `Infix to Prefix: ${answer}`;
+    txt1.style.color = "#94a3b8";
 
 }
+
+
+
+
+
+function initDomArr(node) {
+    domArr = new Array(7);
+    for (var i = 0; i < 7; i++) {
+        domArr[i] = new Array(2 ** i);
+        var len = domArr[i].length;
+        for (var j = 0; j < len; j++) {
+            domArr[i][j] = '<div class="node level' + i + '"></div>';
+        }
+    }
+}
+
+
+function Node(data, left, right, level, floorIndex) {
+    this.data = data;
+    this.left = left;
+    this.right = right;
+    this.level = level;
+    this.floorIndex = floorIndex;
+
+}
+
+
+function buildTree(arr, x, y) {
+    var c1 = -1,
+        c2 = -1,
+        flag = 0,
+        u;
+
+
+    if (y - x == 1) {
+        var temp = new Node(arr[x], null, null);
+        treeArr.push(temp);
+        return temp;
+    }
+
+
+    for (var i = x; i < y; i++) {
+        switch (arr[i]) {
+            case '(':
+                flag++;
+                break;
+            case ')':
+                flag--;
+                break;
+            case '+':
+            case '-':
+                if (!flag)
+                    c1 = i;
+                break;
+            case '*':
+            case '/':
+            case '^':
+                if (!flag)
+                    c2 = i;
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    if (c1 < 0) {
+        c1 = c2;
+    }
+
+
+    if (c1 < 0) {
+
+        return buildTree(arr, x + 1, y - 1);
+    }
+
+    var tempObj = new Node(arr[c1], null, null);
+    treeArr.push(tempObj);
+    tempObj.left = buildTree(arr, x, c1);
+    tempObj.right = buildTree(arr, c1 + 1, y);
+
+    return tempObj;
+}
+
+
+function initLevel(node, num, index) {
+
+    if (!node) {
+        return;
+    }
+
+    domArr[num][index - 1] = '<div class="node level' + num + '">' + node.data + '</div>';
+    node.floorIndex = index;
+    node.level = num;
+    initLevel(node.left, num + 1, index * 2 - 1);
+    initLevel(node.right, num + 1, index * 2);
+}
+
+
+
+
+
+function createDom() {
+
+    initLevel(treeArr[0], 0, 1);
+    levelNum = 0;
+    treeArr.forEach(function(value) {
+        if (value.level > levelNum) {
+            levelNum = value.level;
+        }
+    });
+
+    var str = '';
+    for (var i = 0; i <= levelNum; i++) {
+        var floorNodeNum = 2 ** i;
+        for (var j = 0; j < floorNodeNum; j++) {
+            str += domArr[i][j];
+        }
+    }
+    display.innerHTML = str;
+}
+

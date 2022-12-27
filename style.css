@@ -33,7 +33,7 @@ body{
     font-size: 14px;
     transition: 0.4s linear;
     cursor: pointer;
-    margin-left: 42%;
+    margin-left: 45%;
     margin-top: 2%;
 }
 .container button:hover{
@@ -70,4 +70,74 @@ body{
     width: 50px;
     height: 50px;
     position: sticky;
+}
+
+#display {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    font-weight: bolder;
+    box-sizing: border-box;
+}
+#display::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.node {
+    height: 40px;
+    line-height: 40px;
+    float: left;
+    box-sizing: border-box;
+    border: 1px solid rgba(97, 98, 97, .7);
+}
+
+.level0 {
+    width: 100%;
+    color: white;
+    font-size: 28px;
+}
+
+.level1 {
+    width: 50%;
+    color: white;
+    font-size: 26px;
+    
+}
+
+.level2 {
+    width: 25%;
+    color: white;
+    font-size: 24px;
+}
+
+.level3 {
+    width: 12.5%;
+    color: white;
+    font-size: 22px;
+}
+
+.level4 {
+    width: 6.25%;
+    color: white;
+    font-size: 20px;
+}
+
+.level5 {
+    width: 3.125%;
+    color: white;
+    font-size: 18px;
+}
+
+.level6 {
+    width: 1.5625%;
+    color: white;
+    font-size: 12px;
+}
+
+.layer {
+    margin: 20px 0;
+    width: 100%;
+    text-align: center;
+    height: 30px;
 }
