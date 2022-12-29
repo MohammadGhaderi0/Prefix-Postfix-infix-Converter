@@ -1,23 +1,17 @@
 let text ;
 let txt1 = document.getElementById('txt1');
 let txt2 = document.getElementById('txt2');
-
 var treeArr = []; 
 var levelNum = 0; 
 var domArr; 
-
-
-
-var pre_order_traversal_arr = [];
-var middle_order_traversal_arr = [];
-var post_order_traversal_arr = [];
-
 var input = document.getElementById("box");
 var display = document.getElementById('display');
+let exp = document.getElementById("exp");
 
 
 
 document.getElementById("btn").onclick = function(){
+    exp.innerHTML = "The expression tree"
     text = document.getElementById("box").value;
     // check if input is empty
     if(text.length < 3){
@@ -91,33 +85,14 @@ document.getElementById("btn").onclick = function(){
         infixToPrefix(text);
     }
     initDomArr();
-    var temp = text.split("");
-    var arr = [];
-    var t = '';
-    temp.forEach(function(value) {
-        if ((value >= '0' && value <= '9') || value == '.') {
-            t += value;
-        } else {
-            if (t) {
-                arr.push(Number(t));
-                t = '';
-            }
-            arr.push(value);
-
-        }
-    });
-    if (t) {
-        arr.push(Number(t));
-    }
-
-
+    var arr = text.split("");
     treeArr = [];
     buildTree(arr, 0, arr.length);
-
-
-
     createDom();
 }       
+
+
+
 
 
 function isOperator(x)

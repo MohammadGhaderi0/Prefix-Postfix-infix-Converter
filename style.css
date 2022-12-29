@@ -33,7 +33,7 @@ body{
     font-size: 14px;
     transition: 0.4s linear;
     cursor: pointer;
-    margin-left: 45%;
+    margin-left: 44.8%;
     margin-top: 2%;
 }
 .container button:hover{
@@ -94,44 +94,44 @@ body{
 
 .level0 {
     width: 100%;
-    color: white;
+    color: #efefef;
     font-size: 28px;
 }
 
 .level1 {
     width: 50%;
-    color: white;
+    color: #efefef;
     font-size: 26px;
     
 }
 
 .level2 {
     width: 25%;
-    color: white;
+    color: #efefef;
     font-size: 24px;
 }
 
 .level3 {
     width: 12.5%;
-    color: white;
+    color: #efefef;
     font-size: 22px;
 }
 
 .level4 {
     width: 6.25%;
-    color: white;
+    color: #efefef;
     font-size: 20px;
 }
 
 .level5 {
     width: 3.125%;
-    color: white;
+    color: #efefef;
     font-size: 18px;
 }
 
 .level6 {
     width: 1.5625%;
-    color: white;
+    color: #efefef;
     font-size: 12px;
 }
 
@@ -140,4 +140,9 @@ body{
     width: 100%;
     text-align: center;
     height: 30px;
+}
+#exp{
+    margin-top: 50px;
+    color:#efefef ;
+    font-weight: 100;
 }
